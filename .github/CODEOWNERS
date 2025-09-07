@@ -1,0 +1,8 @@
+# CODEOWNERS file for CircleOfInterest
+
+# Default owner for the whole repo
+*       @ktsrivastava29
+
+# Example: If later you add teams or specific folders, you can extend like this:
+# /lib/core/         @ktsrivastava29
+# /lib/presentation/ @your-team-handle
