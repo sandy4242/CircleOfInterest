@@ -6,12 +6,15 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("CircleOfInterest"),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text("CircleOfInterest"), centerTitle: true),
       body: const Center(
-        child: Text("Welcome to CircleOfInterest 🎉"),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: 20),
+            Text("Circle Of Interest", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+          ],
+        ),
       ),
     );
   }
