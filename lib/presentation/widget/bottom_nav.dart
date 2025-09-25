@@ -14,10 +14,10 @@ class BottomNavigationWidget extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: onTap,
-      selectedItemColor: AppColors.primary, 
+      selectedItemColor: AppColors.primary,
       unselectedItemColor: Colors.grey,
       type: BottomNavigationBarType.fixed,
-      backgroundColor: AppColors.background, 
+      backgroundColor: AppColors.background,
       items: _buildBottomNavItems(),
     );
   }
@@ -35,14 +35,15 @@ class BottomNavigationWidget extends StatelessWidget {
         label: AppConstants.createLabel,
       ),
       BottomNavigationBarItem(
-        icon: const Icon(Icons.person_outline),
-        activeIcon: const Icon(Icons.person),
-        label: AppConstants.profileLabel,
-      ),
-      BottomNavigationBarItem(
         icon: const Icon(Icons.chat_bubble_outline),
         activeIcon: const Icon(Icons.chat_bubble),
         label: AppConstants.chatLabel,
+      ),
+
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.person_outline),
+        activeIcon: const Icon(Icons.person),
+        label: AppConstants.profileLabel,
       ),
     ];
   }
