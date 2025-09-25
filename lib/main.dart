@@ -1,6 +1,6 @@
-import 'package:circle_of_interest/presentation/screens/home_screen.dart';
-import 'package:circle_of_interest/presentation/widget/bottom_nav.dart';
+import 'package:circle_of_interest/presentation/screens/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'core/theme/app_theme.dart';
 
 void main() {
   runApp(const CircleOfInterest());
@@ -14,10 +14,8 @@ class CircleOfInterest extends StatelessWidget {
     return MaterialApp(
       title: 'CircleOfInterest',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-        ),
-      home: const MainBottomNavBar(),
+      theme: AppTheme.light,
+      home: const MainScreen(),
     );
   }
 }

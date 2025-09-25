@@ -1,48 +1,49 @@
+// lib/widgets/bottom_navigation_widget.dart
 import 'package:flutter/material.dart';
+import '../../constants/constants.dart';
+import '../../core/theme/app_colors.dart';
 
-import '../screens/chat_screen.dart';
-import '../screens/create_event_screen.dart';
-import '../screens/home_screen.dart';
-import '../screens/profile_screen.dart';
+class BottomNavigationWidget extends StatelessWidget {
+  final int currentIndex;
+  final Function(int) onTap;
 
-class MainBottomNavBar extends StatefulWidget {
-  const MainBottomNavBar({super.key});
-
-  @override
-  State<MainBottomNavBar> createState() => _MainBottomNavBarState();
-}
-
-class _MainBottomNavBarState extends State<MainBottomNavBar> {
-  int _currentIndex = 0;
-
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    const CreateEventScreen(),
-    const ChatScreen(),
-    const ProfileScreen(),
-  ];
+  const BottomNavigationWidget({Key? key, required this.currentIndex, required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(index: _currentIndex, children: _screens),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: 'Create'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
-      ),
+    return BottomNavigationBar(
+      currentIndex: currentIndex,
+      onTap: onTap,
+      selectedItemColor: AppColors.primary, 
+      unselectedItemColor: Colors.grey,
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: AppColors.background, 
+      items: _buildBottomNavItems(),
     );
+  }
+
+  List<BottomNavigationBarItem> _buildBottomNavItems() {
+    return [
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.home_outlined),
+        activeIcon: const Icon(Icons.home),
+        label: AppConstants.homeLabel,
+      ),
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.add_circle_outline),
+        activeIcon: const Icon(Icons.add_circle),
+        label: AppConstants.createLabel,
+      ),
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.person_outline),
+        activeIcon: const Icon(Icons.person),
+        label: AppConstants.profileLabel,
+      ),
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.chat_bubble_outline),
+        activeIcon: const Icon(Icons.chat_bubble),
+        label: AppConstants.chatLabel,
+      ),
+    ];
   }
 }
