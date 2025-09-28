@@ -5,4 +5,6 @@ class AppConstants {
 
   static const String createLabel = "Create";
   static const String notificationsLabel = "Notifications";
+  // following constant was missing
+  static const String profileLabel = 'Profile';
 }
