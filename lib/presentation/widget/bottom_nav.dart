@@ -43,7 +43,7 @@ class BottomNavigationWidget extends StatelessWidget {
       BottomNavigationBarItem(
         icon: const Icon(Icons.person_outline),
         activeIcon: const Icon(Icons.person),
-        label: AppConstants.profileLabel,
+        label: AppConstants.ProfileLabel,
       ),
     ];
   }

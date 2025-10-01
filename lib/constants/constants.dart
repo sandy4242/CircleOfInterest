@@ -4,5 +4,6 @@ class AppConstants {
   static const String chatLabel = "Chat";
 
   static const String createLabel = "Create";
-  static const String notificationsLabel = "Notifications";
+
+  static const String ProfileLabel = "Profile";
 }

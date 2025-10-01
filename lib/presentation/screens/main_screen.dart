@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../widget/bottom_nav.dart';
 import 'home_screen.dart';
 import 'create_event_screen.dart';
-import 'profile_screen.dart';
 import 'chat_screen.dart';
+import 'profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -18,8 +18,8 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _screens = [
     const HomeScreen(),
     const CreateEventScreen(),
-    const ProfileScreen(),
     const ChatScreen(),
+    const ProfileScreen(),
   ];
 
   void _onTabTapped(int index) {
