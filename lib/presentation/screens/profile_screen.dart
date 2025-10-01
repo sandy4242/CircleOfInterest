@@ -205,7 +205,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void _toggleEdit() {
     if (_isEditing && _formKey.currentState!.validate()) {
-      // Save the changes
       _saveProfile();
     }
     setState(() {
@@ -214,14 +213,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _saveProfile() {
-    // In a real app, you would save to API/database here
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(const SnackBar(content: Text('Profile updated successfully!'), backgroundColor: Colors.green));
   }
 
   void _pickProfileImage() {
-    // In a real app, you would use image_picker package
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -234,7 +231,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: const Text('Camera'),
                 onTap: () {
                   Navigator.pop(context);
-                  // Implement camera functionality
                 },
               ),
               ListTile(
@@ -242,7 +238,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: const Text('Gallery'),
                 onTap: () {
                   Navigator.pop(context);
-                  // Implement gallery functionality
                 },
               ),
             ],
