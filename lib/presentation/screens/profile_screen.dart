@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../core/theme/app_colors.dart';
+import '../widget/profile/past_events_widget.dart';
+import '../widget/profile/profile_image_widget.dart';
+import '../widget/profile/user_info_form_widget.dart';
+import '../../constants/profile_constants.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -15,16 +17,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _emailController = TextEditingController();
   bool _isEditing = false;
 
-  final String _profileImageUrl = '';
+  String _profileImageUrl = '';
   final List<String> _pastEvents = [
-    'Book Club Meeting - Sep 20, 2025',
-    'Photography Workshop - Sep 15, 2025',
-    'Coding Bootcamp - Sep 10, 2025',
+    'Book Club Meeting - Oct 04, 2025',
+    'Photography Workshop - Oct 06, 2025',
+    'Coding Bootcamp - Oct 10, 2025',
   ];
 
   @override
   void initState() {
     super.initState();
+    _initializeUserData();
+  }
+
+  void _initializeUserData() {
     _nameController.text = 'ABC';
     _emailController.text = 'abc123@gmail.com';
   }
@@ -39,167 +45,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-        actions: [IconButton(icon: Icon(_isEditing ? Icons.save : Icons.edit), onPressed: _toggleEdit)],
-      ),
+      appBar: _buildAppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _buildProfileImage(),
-              const SizedBox(height: 24),
-              _buildUserInfoSection(),
-              const SizedBox(height: 32),
-              _buildPastEventsSection(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildProfileImage() {
-    return Stack(
-      children: [
-        CircleAvatar(
-          radius: 60,
-          backgroundColor: AppColors.primary.withOpacity(0.1),
-          backgroundImage: _profileImageUrl.isNotEmpty ? NetworkImage(_profileImageUrl) : null,
-          child: _profileImageUrl.isEmpty ? Icon(Icons.person, size: 60, color: AppColors.primary) : null,
-        ),
-        if (_isEditing)
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Container(
-              decoration: BoxDecoration(color: AppColors.primary, shape: BoxShape.circle),
-              child: IconButton(
-                icon: const Icon(Icons.camera_alt, color: Colors.white, size: 20),
-                onPressed: _pickProfileImage,
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildUserInfoSection() {
-    return Card(
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Personal Information',
-              style: Theme.of(
-                context,
-              ).textTheme.headlineSmall?.copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
+            ProfileImageWidget(imageUrl: _profileImageUrl, isEditing: _isEditing, onImageTap: _showImagePicker),
+            const SizedBox(height: 24),
+            UserInfoFormWidget(
+              formKey: _formKey,
+              nameController: _nameController,
+              emailController: _emailController,
+              isEditing: _isEditing,
             ),
-            const SizedBox(height: 16),
-            _buildTextField(
-              controller: _nameController,
-              label: 'Name',
-              icon: Icons.person_outline,
-              enabled: _isEditing,
-            ),
-            const SizedBox(height: 16),
-            _buildTextField(
-              controller: _emailController,
-              label: 'Email',
-              icon: Icons.email_outlined,
-              enabled: _isEditing,
-              keyboardType: TextInputType.emailAddress,
-            ),
+            const SizedBox(height: 32),
+            PastEventsWidget(pastEvents: _pastEvents, onEventTap: _showEventDetails),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required IconData icon,
-    required bool enabled,
-    TextInputType? keyboardType,
-  }) {
-    return TextFormField(
-      controller: controller,
-      enabled: enabled,
-      keyboardType: keyboardType,
-      decoration: InputDecoration(
-        labelText: label,
-        prefixIcon: Icon(icon),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: AppColors.primary),
-        ),
-      ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter your $label';
-        }
-        if (label == 'Email' && !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-          return 'Please enter a valid email address';
-        }
-        return null;
-      },
-    );
-  }
-
-  Widget _buildPastEventsSection() {
-    return Card(
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Past Events Joined',
-              style: Theme.of(
-                context,
-              ).textTheme.headlineSmall?.copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            if (_pastEvents.isEmpty)
-              const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text('No events joined yet', style: TextStyle(color: Colors.grey, fontSize: 16)),
-                ),
-              )
-            else
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _pastEvents.length,
-                separatorBuilder: (context, index) => const Divider(),
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: AppColors.primary.withOpacity(0.1),
-                      child: Icon(Icons.event, color: AppColors.primary),
-                    ),
-                    title: Text(_pastEvents[index]),
-                    trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                    onTap: () {
-                      // Navigate to event details
-                      _showEventDetails(index);
-                    },
-                  );
-                },
-              ),
-          ],
-        ),
-      ),
+  AppBar _buildAppBar() {
+    return AppBar(
+      title: const Text(ProfileConstants.profileTitle),
+      actions: [IconButton(icon: Icon(_isEditing ? Icons.save : Icons.edit), onPressed: _toggleEdit)],
     );
   }
 
@@ -213,12 +84,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _saveProfile() {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Profile updated successfully!'), backgroundColor: Colors.green));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text(ProfileConstants.profileUpdatedMessage), backgroundColor: Colors.green),
+    );
   }
 
-  void _pickProfileImage() {
+  void _showImagePicker() {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -228,16 +99,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               ListTile(
                 leading: const Icon(Icons.photo_camera),
-                title: const Text('Camera'),
+                title: const Text(ProfileConstants.cameraOption),
                 onTap: () {
                   Navigator.pop(context);
+                  // Implement camera functionality
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.photo_library),
-                title: const Text('Gallery'),
+                title: const Text(ProfileConstants.galleryOption),
                 onTap: () {
                   Navigator.pop(context);
+                  // Implement gallery functionality
                 },
               ),
             ],
@@ -252,9 +125,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Event Details'),
+          title: const Text(ProfileConstants.eventDetailsTitle),
           content: Text(_pastEvents[index]),
-          actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Close'))],
+          actions: [
+            TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text(ProfileConstants.closeButton)),
+          ],
         );
       },
     );
