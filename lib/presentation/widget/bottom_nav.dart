@@ -7,7 +7,7 @@ class BottomNavigationWidget extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
 
-  const BottomNavigationWidget({Key? key, required this.currentIndex, required this.onTap}) : super(key: key);
+  const BottomNavigationWidget({super.key, required this.currentIndex, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class BottomNavigationWidget extends StatelessWidget {
       BottomNavigationBarItem(
         icon: const Icon(Icons.person_outline),
         activeIcon: const Icon(Icons.person),
-        label: AppConstants.ProfileLabel,
+        label: AppConstants.profileLabel,
       ),
     ];
   }

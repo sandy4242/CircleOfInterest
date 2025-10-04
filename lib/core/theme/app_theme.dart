@@ -26,4 +26,29 @@ class AppTheme {
       ),
     );
   }
+
+  static ThemeData get dark {
+    return ThemeData(
+      primaryColor: AppColors.primaryDark,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: AppColors.primaryDark,
+        brightness: Brightness.dark,
+      ),
+      scaffoldBackgroundColor: AppColors.backgroundDark,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.primaryDark,
+        foregroundColor: Colors.white,
+        elevation: 0,
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primaryDark,
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      ),
+    );
+  }
 }

@@ -6,8 +6,22 @@ void main() {
   runApp(const CircleOfInterest());
 }
 
-class CircleOfInterest extends StatelessWidget {
+class CircleOfInterest extends StatefulWidget {
   const CircleOfInterest({super.key});
+
+  @override
+  State<CircleOfInterest> createState() => _CircleOfInterestState();
+}
+
+class _CircleOfInterestState extends State<CircleOfInterest> {
+  ThemeMode _themeMode = ThemeMode.system; // Default to system theme
+
+  void toggleTheme() {
+    setState(() {
+      _themeMode =
+          _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +29,12 @@ class CircleOfInterest extends StatelessWidget {
       title: 'CircleOfInterest',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      home: const MainScreen(),
+      darkTheme: AppTheme.dark, // Make sure you define dark theme in app_theme.dart
+      themeMode: _themeMode,
+      home: MainScreen(
+        onToggleTheme: toggleTheme, // Pass toggle function to MainScreen
+      ),
     );
   }
 }
+
