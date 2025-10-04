@@ -15,28 +15,12 @@ class CircleOfInterest extends StatefulWidget {
 }
 
 class _CircleOfInterestState extends State<CircleOfInterest> {
-  ThemeMode _themeMode = ThemeMode.system;
+  ThemeMode _themeMode = ThemeMode.system; // Default to system theme
 
-  @override
-  void initState() {
-    super.initState();
-    _loadTheme();
-  }
-
-  void _loadTheme() async {
-    final prefs = await SharedPreferences.getInstance();
-    final isDark = prefs.getBool('isDark') ?? false;
-    setState(() {
-      _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
-    });
-  }
-
-  void toggleTheme() async {
-    final prefs = await SharedPreferences.getInstance();
+  void toggleTheme() {
     setState(() {
       _themeMode =
           _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-      prefs.setBool('isDark', _themeMode == ThemeMode.dark);
     });
   }
 
@@ -46,11 +30,12 @@ class _CircleOfInterestState extends State<CircleOfInterest> {
       title: 'CircleOfInterest',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
+      darkTheme: AppTheme.dark, // Make sure you define dark theme in app_theme.dart
       themeMode: _themeMode,
       home: MainScreen(
-        onToggleTheme: toggleTheme, // Pass toggle to main screen
+        onToggleTheme: toggleTheme, // Pass toggle function to MainScreen
       ),
     );
   }
 }
+

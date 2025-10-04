@@ -35,20 +35,15 @@ class AppTheme {
   static ThemeData get dark {
     return ThemeData(
       primaryColor: AppColors.primaryDark,
-      scaffoldBackgroundColor: AppColors.backgroundDark,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primaryDark,
         brightness: Brightness.dark,
       ),
+      scaffoldBackgroundColor: AppColors.backgroundDark,
       appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.headerDark,
+        backgroundColor: AppColors.primaryDark,
         foregroundColor: Colors.white,
         elevation: 0,
-      ),
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: AppColors.bottomNavDark,
-        selectedItemColor: AppColors.primaryDark,
-        unselectedItemColor: Colors.grey,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
