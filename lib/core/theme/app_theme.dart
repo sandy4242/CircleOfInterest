@@ -5,15 +5,20 @@ class AppTheme {
   static ThemeData get light {
     return ThemeData(
       primaryColor: AppColors.primary,
+      scaffoldBackgroundColor: AppColors.background,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primary,
         brightness: Brightness.light,
       ),
-      scaffoldBackgroundColor: AppColors.background,
       appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.headerLight,
         foregroundColor: Colors.white,
         elevation: 0,
+      ),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: AppColors.bottomNavLight,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: Colors.grey,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -30,15 +35,20 @@ class AppTheme {
   static ThemeData get dark {
     return ThemeData(
       primaryColor: AppColors.primaryDark,
+      scaffoldBackgroundColor: AppColors.backgroundDark,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primaryDark,
         brightness: Brightness.dark,
       ),
-      scaffoldBackgroundColor: AppColors.backgroundDark,
       appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.primaryDark,
+        backgroundColor: AppColors.headerDark,
         foregroundColor: Colors.white,
         elevation: 0,
+      ),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: AppColors.bottomNavDark,
+        selectedItemColor: AppColors.primaryDark,
+        unselectedItemColor: Colors.grey,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
