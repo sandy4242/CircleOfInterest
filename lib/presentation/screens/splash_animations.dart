@@ -20,7 +20,6 @@ class SplashAnimations {
       ),
     );
   }
-
   void start() {
     controller.forward();
   }
