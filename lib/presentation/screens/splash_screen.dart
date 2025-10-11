@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'splash_animations.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,37 +12,21 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController;
-  late final Animation<double> _fadeAnimation;
-  late final Animation<double> _scaleAnimation;
+  late final SplashAnimations _animations;
 
   @override
   void initState() {
     super.initState();
     
-    // Initialize animations
+    // Initialize animation controller
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 2500),
       vsync: this,
     );
     
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: const Interval(0.0, 0.8, curve: Curves.easeIn),
-    ));
-    
-    _scaleAnimation = Tween<double>(
-      begin: 0.8,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: const Interval(0.2, 1.0, curve: Curves.elasticOut),
-    ));
-    
-    // Start animations
-    _animationController.forward();
+    // Initialize animations
+    _animations = SplashAnimations(_animationController);
+    _animations.start();
     
     // Navigate after delay
     _navigateToLogin();
@@ -57,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
-    _animationController.dispose();
+    _animations.dispose();
     super.dispose();
   }
 
@@ -86,9 +71,9 @@ class _SplashScreenState extends State<SplashScreen>
                 animation: _animationController,
                 builder: (context, child) {
                   return Opacity(
-                    opacity: _fadeAnimation.value * 0.1,
+                    opacity: _animations.fadeAnimation.value * 0.1,
                     child: Transform.scale(
-                      scale: _scaleAnimation.value,
+                      scale: _animations.scaleAnimation.value,
                       child: Container(
                         width: 300,
                         height: 300,
@@ -109,9 +94,9 @@ class _SplashScreenState extends State<SplashScreen>
                 animation: _animationController,
                 builder: (context, child) {
                   return Opacity(
-                    opacity: _fadeAnimation.value * 0.05,
+                    opacity: _animations.fadeAnimation.value * 0.05,
                     child: Transform.scale(
-                      scale: _scaleAnimation.value * 0.8,
+                      scale: _animations.scaleAnimation.value * 0.8,
                       child: Container(
                         width: 200,
                         height: 200,
@@ -136,9 +121,9 @@ class _SplashScreenState extends State<SplashScreen>
                     animation: _animationController,
                     builder: (context, child) {
                       return Transform.scale(
-                        scale: _scaleAnimation.value,
+                        scale: _animations.scaleAnimation.value,
                         child: FadeTransition(
-                          opacity: _fadeAnimation,
+                          opacity: _animations.fadeAnimation,
                           child: Container(
                             padding: const EdgeInsets.all(20),
                             decoration: BoxDecoration(
@@ -169,7 +154,7 @@ class _SplashScreenState extends State<SplashScreen>
                     animation: _animationController,
                     builder: (context, child) {
                       return FadeTransition(
-                        opacity: _fadeAnimation,
+                        opacity: _animations.fadeAnimation,
                         child: Column(
                           children: [
                             SizedBox(
@@ -210,7 +195,7 @@ class _SplashScreenState extends State<SplashScreen>
                 animation: _animationController,
                 builder: (context, child) {
                   return FadeTransition(
-                    opacity: _fadeAnimation,
+                    opacity: _animations.fadeAnimation,
                     child: Text(
                       'Welcome',
                       textAlign: TextAlign.center,
