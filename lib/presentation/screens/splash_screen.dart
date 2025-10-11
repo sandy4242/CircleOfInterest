@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'splash_animations.dart';
+import '../../constants/splash_constants.dart';
+import '../../core/theme/app_colors.dart';  
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 2500),
+      duration: Duration(milliseconds: SplashConstants.animationDurationMs),
       vsync: this,
     );
     _animations = SplashAnimations(_animationController);
@@ -27,9 +29,9 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _navigateToLogin() async {
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: SplashConstants.splashDelaySeconds));
     if (mounted && context.mounted) {
-      context.go('/login');
+      context.go(SplashConstants.loginRoute);
     }
   }
 
@@ -47,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen>
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.teal, Colors.tealAccent],
+            colors: [AppColors.primary, AppColors.accent],
           ),
         ),
         child: Stack(
@@ -127,7 +129,7 @@ class _SplashScreenState extends State<SplashScreen>
           child: FadeTransition(
             opacity: _animations.fadeAnimation,
             child: Container(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(SplashConstants.logoPadding),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white.withValues(alpha: 0.15),
@@ -140,8 +142,8 @@ class _SplashScreenState extends State<SplashScreen>
                 ],
               ),
               child: Image.asset(
-                'assets/images/logo-no-bg.png',
-                height: 120,
+                SplashConstants.logoAssetPath,
+                height: SplashConstants.logoSize,
               ),
             ),
           ),
@@ -159,10 +161,10 @@ class _SplashScreenState extends State<SplashScreen>
           child: Column(
             children: [
               SizedBox(
-                width: 40,
-                height: 40,
+                width: SplashConstants.loadingIndicatorSize,
+                height: SplashConstants.loadingIndicatorSize,
                 child: CircularProgressIndicator(
-                  strokeWidth: 2,
+                  strokeWidth: SplashConstants.loadingIndicatorStrokeWidth,
                   valueColor: AlwaysStoppedAnimation<Color>(
                     Colors.white.withValues(alpha: 0.8),
                   ),
@@ -170,7 +172,7 @@ class _SplashScreenState extends State<SplashScreen>
               ),
               const SizedBox(height: 16),
               Text(
-                'Loading...',
+                SplashConstants.loadingText,
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.9),
                   fontSize: 16,
@@ -196,7 +198,7 @@ class _SplashScreenState extends State<SplashScreen>
           return FadeTransition(
             opacity: _animations.fadeAnimation,
             child: Text(
-              'Welcome',
+              SplashConstants.welcomeText,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.7),
@@ -210,4 +212,4 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
   }
-}
+    }
