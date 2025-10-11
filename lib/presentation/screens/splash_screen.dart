@@ -17,22 +17,15 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    
-    // Initialize animation controller
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 2500),
       vsync: this,
     );
-    
-    // Initialize animations
     _animations = SplashAnimations(_animationController);
     _animations.start();
-    
-    // Navigate after delay
     _navigateToLogin();
   }
 
-  // Extracted navigation logic with better mounted checks
   Future<void> _navigateToLogin() async {
     await Future.delayed(const Duration(seconds: 5));
     if (mounted && context.mounted) {
@@ -54,164 +47,166 @@ class _SplashScreenState extends State<SplashScreen>
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Colors.teal,
-              Colors.tealAccent,
-            ],
-            stops: [0.0, 1.0],
+            colors: [Colors.teal, Colors.tealAccent],
           ),
         ),
         child: Stack(
           children: [
-            // Animated circles in background
-            Positioned(
+            _buildBackgroundCircle(
               top: -100,
               right: -100,
-              child: AnimatedBuilder(
-                animation: _animationController,
-                builder: (context, child) {
-                  return Opacity(
-                    opacity: _animations.fadeAnimation.value * 0.1,
-                    child: Transform.scale(
-                      scale: _animations.scaleAnimation.value,
-                      child: Container(
-                        width: 300,
-                        height: 300,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white.withValues(alpha: 0.2),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
+              size: 300,
+              opacity: 0.1,
             ),
-            Positioned(
+            _buildBackgroundCircle(
               bottom: -50,
               left: -50,
-              child: AnimatedBuilder(
-                animation: _animationController,
-                builder: (context, child) {
-                  return Opacity(
-                    opacity: _animations.fadeAnimation.value * 0.05,
-                    child: Transform.scale(
-                      scale: _animations.scaleAnimation.value * 0.8,
-                      child: Container(
-                        width: 200,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white.withValues(alpha: 0.1),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
+              size: 200,
+              opacity: 0.05,
+              scale: 0.8,
             ),
-            
-            // Main content
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Logo with animations
-                  AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return Transform.scale(
-                        scale: _animations.scaleAnimation.value,
-                        child: FadeTransition(
-                          opacity: _animations.fadeAnimation,
-                          child: Container(
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white.withValues(alpha: 0.15),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.1),
-                                  blurRadius: 20,
-                                  spreadRadius: 5,
-                                ),
-                              ],
-                            ),
-                            child: Image.asset(
-                              'assets/images/logo-no-bg.png',
-                              height: 120,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  
+                  _buildLogo(),
                   const SizedBox(height: 40),
-                  
-                  // Loading indicator
-                  AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return FadeTransition(
-                        opacity: _animations.fadeAnimation,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              width: 40,
-                              height: 40,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Colors.white.withValues(alpha: 0.8),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              'Loading...',
-                              style: TextStyle(
-                                color: Colors.white.withValues(alpha: 0.9),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w300,
-                                letterSpacing: 1.2,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                  _buildLoadingIndicator(),
                 ],
               ),
             ),
-            
-            // Bottom branding 
-            Positioned(
-              bottom: 50,
-              left: 0,
-              right: 0,
-              child: AnimatedBuilder(
-                animation: _animationController,
-                builder: (context, child) {
-                  return FadeTransition(
-                    opacity: _animations.fadeAnimation,
-                    child: Text(
-                      'Welcome',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.7),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300,
-                        letterSpacing: 2.0,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+            _buildBottomText(),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildBackgroundCircle({
+    double? top,
+    double? right,
+    double? bottom,
+    double? left,
+    required double size,
+    required double opacity,
+    double scale = 1.0,
+  }) {
+    return Positioned(
+      top: top,
+      right: right,
+      bottom: bottom,
+      left: left,
+      child: AnimatedBuilder(
+        animation: _animationController,
+        builder: (context, child) {
+          return Opacity(
+            opacity: _animations.fadeAnimation.value * opacity,
+            child: Transform.scale(
+              scale: _animations.scaleAnimation.value * scale,
+              child: Container(
+                width: size,
+                height: size,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withValues(alpha: 0.2),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildLogo() {
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, child) {
+        return Transform.scale(
+          scale: _animations.scaleAnimation.value,
+          child: FadeTransition(
+            opacity: _animations.fadeAnimation,
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: 0.15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.1),
+                    blurRadius: 20,
+                    spreadRadius: 5,
+                  ),
+                ],
+              ),
+              child: Image.asset(
+                'assets/images/logo-no-bg.png',
+                height: 120,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildLoadingIndicator() {
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, child) {
+        return FadeTransition(
+          opacity: _animations.fadeAnimation,
+          child: Column(
+            children: [
+              SizedBox(
+                width: 40,
+                height: 40,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Colors.white.withValues(alpha: 0.8),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Loading...',
+                style: TextStyle(
+                  color: Colors.white.withValues(alpha: 0.9),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w300,
+                  letterSpacing: 1.2,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildBottomText() {
+    return Positioned(
+      bottom: 50,
+      left: 0,
+      right: 0,
+      child: AnimatedBuilder(
+        animation: _animationController,
+        builder: (context, child) {
+          return FadeTransition(
+            opacity: _animations.fadeAnimation,
+            child: Text(
+              'Welcome',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white.withValues(alpha: 0.7),
+                fontSize: 14,
+                fontWeight: FontWeight.w300,
+                letterSpacing: 2.0,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
