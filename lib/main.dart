@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'config/routes/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'presentation/screens/main_screen.dart';
 
@@ -26,16 +26,11 @@ class _CircleOfInterestState extends State<CircleOfInterest> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'CircleOfInterest',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      darkTheme: AppTheme.dark, // Make sure you define dark theme in app_theme.dart
-      themeMode: _themeMode,
-      home: MainScreen(
-        onToggleTheme: toggleTheme, // Pass toggle function to MainScreen
-      ),
+      routerConfig: AppRouter.router,
     );
   }
 }
-
