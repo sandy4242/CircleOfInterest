@@ -134,7 +134,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                 validator: (val) => val == null || val.isEmpty ? 'Enter a title' : null,
                 onSaved: (val) => _event.title = val!,
               ),
-              AppConstants.verticalSpaceSmall,
+              SizedBox(height: AppConstants.verticalSpaceSmall),
 
               // Description
               TextFormField(
@@ -144,7 +144,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                 validator: (val) => val == null || val.isEmpty ? 'Enter description' : null,
                 onSaved: (val) => _event.description = val!,
               ),
-              AppConstants.verticalSpaceSmall,
+              SizedBox(height: AppConstants.verticalSpaceSmall),
 
               // Category Dropdown
               DropdownButtonFormField<String>(
@@ -154,7 +154,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                 onChanged: (val) => setState(() => _event.category = val!),
                 validator: (val) => val == null || val.isEmpty ? 'Select category' : null,
               ),
-              AppConstants.verticalSpaceSmall,
+              SizedBox(height: AppConstants.verticalSpaceSmall),
 
               // Date Picker
               ListTile(
@@ -184,8 +184,16 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                 onChanged: (val) => setState(() => _event.isPublic = val),
               ),
 
+<<<<<<< HEAD
               AppConstants.verticalSpaceMedium,
               ElevatedButton(onPressed: _submitForm, child: const Text('Create Event')),
+=======
+              SizedBox(height: AppConstants.verticalSpaceSmall),
+              ElevatedButton(
+                onPressed: _submitForm,
+                child: const Text('Create Event'),
+              ),
+>>>>>>> 0432ab45ca97983856a67d5ae253f3aa1e7beff3
             ],
           ),
         ),

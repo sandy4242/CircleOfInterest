@@ -5,6 +5,7 @@ class AppConstants {
   static const String homeLabel = "Home";
   static const String chatLabel = "Chat";
   static const String createLabel = "Create";
+<<<<<<< HEAD
   static const String profileLabel = "Profile"; // Fixed capitalization
 
   // Spacing Constants
@@ -28,4 +29,10 @@ class AppConstants {
   static const EdgeInsets paddingHorizontalMedium = EdgeInsets.symmetric(horizontal: 16.0);
   static const EdgeInsets paddingVerticalSmall = EdgeInsets.symmetric(vertical: 8.0);
   static const EdgeInsets paddingVerticalMedium = EdgeInsets.symmetric(vertical: 16.0);
+=======
+  static const String ProfileLabel = "Profile";
+  
+  static const double verticalSpaceSmall = 8.0;
+  static const double verticalSpaceMedium = 16.0;
+>>>>>>> 0432ab45ca97983856a67d5ae253f3aa1e7beff3
 }

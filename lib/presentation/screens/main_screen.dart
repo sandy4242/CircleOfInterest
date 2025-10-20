@@ -6,7 +6,9 @@ import 'chat_screen.dart';
 import 'profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final VoidCallback? onToggleTheme; // Theme toggle callback
+
+  const MainScreen({super.key, this.onToggleTheme});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -31,8 +33,21 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Circle of Interest'),
+        actions: [
+          if (widget.onToggleTheme != null)
+            IconButton(
+              icon: const Icon(Icons.brightness_6),
+              onPressed: widget.onToggleTheme,
+            ),
+        ],
+      ),
       body: IndexedStack(index: _currentIndex, children: _screens),
-      bottomNavigationBar: BottomNavigationWidget(currentIndex: _currentIndex, onTap: _onTabTapped),
+      bottomNavigationBar: BottomNavigationWidget(
+        currentIndex: _currentIndex,
+        onTap: _onTabTapped,
+      ),
     );
   }
 }
