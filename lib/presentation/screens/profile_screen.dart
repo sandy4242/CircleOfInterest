@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/theme/app_colors.dart';
 import '../widget/profile/past_events_widget.dart';
 import '../widget/profile/profile_image_widget.dart';
 import '../widget/profile/user_info_form_widget.dart';
@@ -72,6 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   AppBar _buildAppBar() {
     return AppBar(
       title: const Text(ProfileConstants.profileTitle),
+      backgroundColor: AppColors.primary,
       actions: [
         IconButton(icon: Icon(_isEditing ? Icons.save : Icons.edit), onPressed: _toggleEdit),
         // Add this button for quick access to demo event details

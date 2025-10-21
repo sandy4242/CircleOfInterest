@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Discover Events'), centerTitle: true),
+      appBar: AppBar(title: const Text('Discover Events'), centerTitle: true, backgroundColor: AppColors.primary),
       body: Padding(
         padding: AppConstants.paddingMedium,
         child: Column(
